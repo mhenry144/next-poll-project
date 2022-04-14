@@ -1,6 +1,7 @@
-import React from 'react'
+import React, { useState } from 'react'
 
 function Input() {
+  const [input, setInput] = useState('')
   return (
     <div
       className={`flex space-x-3 overflow-y-scroll border-b border-gray-700 p-3 `}
@@ -10,10 +11,18 @@ function Input() {
         alt=""
         className="h-11 w-11 rounded-full xl:mr-2.5"
       />
-      {/* divide y = border and adds it to each child */}
+      {/* divide y = tailwind utility class to create a border and adds it to each child */}
       <div className="w-full divide-y divide-gray-700">
-        <div>
-          <textarea name="" id="" cols="30" rows="10"></textarea>
+        <div className={``}>
+          <textarea
+            value={input}
+            placeholder="Whats up?"
+            onChange={(e) => setInput(e.target.value)}
+            name=""
+            id=""
+            rows="2"
+            className="bg-transparent text-lg tracking-wide text-[#d9d9d9] placeholder-gray-500 outline-none"
+          ></textarea>
         </div>
       </div>
     </div>
