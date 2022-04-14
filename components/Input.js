@@ -1,7 +1,18 @@
-import React, { useState } from 'react'
+import React, { useRef, useState } from 'react'
+import {
+  CalendarIcon,
+  ChartBarIcon,
+  EmojiHappyIcon,
+  PhotographIcon,
+  XIcon,
+} from '@heroicons/react/outline'
 
 function Input() {
   const [input, setInput] = useState('')
+  const [selectedFile, setSelectedFile] = useState(null)
+  const filePickerRef = useRef(null)
+
+  const addImageToPost = () => {}
   return (
     <div
       className={`flex space-x-3 overflow-y-scroll border-b border-gray-700 p-3 `}
@@ -16,13 +27,54 @@ function Input() {
         <div className={``}>
           <textarea
             value={input}
-            placeholder="Whats up?"
+            placeholder="What's up?"
             onChange={(e) => setInput(e.target.value)}
             name=""
             id=""
             rows="2"
-            className="bg-transparent text-lg tracking-wide text-[#d9d9d9] placeholder-gray-500 outline-none"
-          ></textarea>
+            className="min-h-[50px] w-full bg-transparent text-lg tracking-wide text-[#d9d9d9] placeholder-gray-500 outline-none"
+          />
+          {/* && === if selectedFile === true, show */}
+          {selectedFile && (
+            <div className="relative">
+              <div
+                className="absolute top-1 left-1 flex h-8 w-8 cursor-pointer items-center justify-center rounded-full bg-[#15181c] bg-opacity-75 hover:bg-[#272c26]"
+                onClick={() => setSelectedFile(null)}
+              >
+                <XIcon className=" h-5 text-white" />
+              </div>
+              {/* object-contain -- image will never be stretched (retain apsect image) */}
+              <img
+                serc={selectedFile}
+                alt=""
+                className="max-h-80 rounded-2xl object-contain"
+              />
+            </div>
+          )}
+        </div>
+        <div className="items-centerjustify-between flex pt-2.5">
+          <div className="flex items-center">
+            <div className="icon" onClick={() => filePickerRef.current.click()}>
+              <PhotographIcon className="h-[22px] text-[#1d9bf0]" />
+              <input
+                type="file"
+                hidden
+                onChange={addImageToPost}
+                ref={filePickerRef}
+              ></input>
+            </div>
+            <div className="icon rotate-90">
+              <ChartBarIcon className="h-[22px] text-[#1d9bf0]" />
+            </div>
+
+            <div className="icon" onClick={() => setShowEmojis(!showEmojis)}>
+              <EmojiHappyIcon className="h-[22px] text-[#1d9bf0]" />
+            </div>
+
+            <div className="icon">
+              <CalendarIcon className="h-[22px] text-[#1d9bf0]" />
+            </div>
+          </div>
         </div>
       </div>
     </div>
