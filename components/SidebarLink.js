@@ -1,6 +1,6 @@
 import React from 'react'
 
-function SidebarLink() {
+function SidebarLink({ Icon, text, active }) {
   return <div>Sidebar Link</div>
 }
 
