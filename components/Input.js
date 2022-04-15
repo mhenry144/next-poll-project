@@ -6,17 +6,64 @@ import {
   PhotographIcon,
   XIcon,
 } from '@heroicons/react/outline'
+import { db, storage } from '../firebase'
+import {
+  addDoc,
+  collection,
+  doc,
+  serverTimestamp,
+  updateDoc,
+} from '@firebase/firestore'
+import { getDownloadURL, ref, uploadString } from '@firebase/storage'
 
 function Input() {
   const [input, setInput] = useState('')
+  const [loading, setLoading] = useState(false)
   const [selectedFile, setSelectedFile] = useState(null)
   const filePickerRef = useRef(null)
-  const [loading, setLoading] = useState(false)
   const [showEmojis, setShowEmojis] = useState(false)
 
-  const sendPost = () => {}
+  const sendPost = async () => {
+    if (loading) return
+    setLoading(true)
 
-  const addImageToPost = () => {}
+    const docRef = await addDoc(collection(db, 'posts'), {
+      //id: session.user.uid,
+      //username: session.user.name,
+      //userImg: session.user.image,
+      //tag: session.user.tag,
+      text: input,
+      timestamp: serverTimestamp(),
+    })
+
+    const imageRef = ref(storage, `posts/${docRef.id}/image`)
+    // using firebase storage to upload image -- (uploadString uploads string to object location)
+    // convert selectedFile into clean url for Firebase
+    if (selectedFile) {
+      await uploadString(imageRef, selectedFile, 'data_url').then(async () => {
+        const downloadURL = await getDownloadURL(imageRef)
+        await updateDoc(doc(db, 'posts', docRef.id), {
+          image: downloadURL,
+        })
+      })
+    }
+
+    setLoading(false)
+    setInput('')
+    setSelectedFile(null)
+    setShowEmojis(false)
+  }
+
+  const addImageToPost = (e) => {
+    const reader = new FileReader()
+    if (e.target.files[0]) {
+      reader.readAsDataURL(e.target.files[0])
+    }
+
+    reader.onload = (readerEvent) => {
+      setSelectedFile(readerEvent.target.result)
+    }
+  }
   return (
     <div
       className={`scrollbar-hide flex space-x-3 overflow-y-scroll border-b border-gray-700 p-3 ${
@@ -35,7 +82,7 @@ function Input() {
           <textarea
             value={input}
             onChange={(e) => setInput(e.target.value)}
-            placeholder="What's happening?"
+            placeholder="What's up?"
             rows="2"
             className="min-h-[50px] w-full bg-transparent text-lg tracking-wide text-[#d9d9d9] placeholder-gray-500 outline-none"
           />
@@ -50,7 +97,7 @@ function Input() {
               </div>
               {/* object-contain -- image will never be stretched (retain apsect image) */}
               <img
-                serc={selectedFile}
+                src={selectedFile}
                 alt=""
                 className="max-h-80 rounded-2xl object-contain"
               />
@@ -58,39 +105,44 @@ function Input() {
           )}
         </div>
         {/* Icons */}
-        <div className="flex items-center justify-between pt-2.5">
-          <div className="flex items-center">
-            {/* Added custom tailwind css named 'icon' */}
-            <div className="icon" onClick={() => filePickerRef.current.click()}>
-              <PhotographIcon className="h-[22px] text-[#1d9bf0]" />
-              <input
-                type="file"
-                hidden
-                onChange={addImageToPost}
-                ref={filePickerRef}
-              ></input>
-            </div>
-            <div className="icon rotate-90">
-              <ChartBarIcon className="h-[22px] text-[#1d9bf0]" />
-            </div>
-            {/* ! === opposite */}
-            <div className="icon" onClick={() => setShowEmojis(!showEmojis)}>
-              <EmojiHappyIcon className="h-[22px] text-[#1d9bf0]" />
-            </div>
+        {!loading && (
+          <div className="flex items-center justify-between pt-2.5">
+            <div className="flex items-center">
+              {/* Added custom tailwind css named 'icon' */}
+              <div
+                className="icon"
+                onClick={() => filePickerRef.current.click()}
+              >
+                <PhotographIcon className="h-[22px] text-[#1d9bf0]" />
+                <input
+                  type="file"
+                  ref={filePickerRef}
+                  hidden
+                  onChange={addImageToPost}
+                ></input>
+              </div>
+              <div className="icon rotate-90">
+                <ChartBarIcon className="h-[22px] text-[#1d9bf0]" />
+              </div>
+              {/* ! === opposite */}
+              <div className="icon" onClick={() => setShowEmojis(!showEmojis)}>
+                <EmojiHappyIcon className="h-[22px] text-[#1d9bf0]" />
+              </div>
 
-            <div className="icon">
-              <CalendarIcon className="h-[22px] text-[#1d9bf0]" />
+              <div className="icon">
+                <CalendarIcon className="h-[22px] text-[#1d9bf0]" />
+              </div>
             </div>
+            {/* POST BUTTON */}
+            <button
+              className="rounded-full bg-[#1d9bf0] px-4 py-1.5 font-bold text-white shadow-md hover:bg-[#1a8cd8] disabled:cursor-default disabled:opacity-50 disabled:hover:bg-[#1d9bf0]"
+              disabled={!input && !selectedFile}
+              onClick={sendPost}
+            >
+              Tweet
+            </button>
           </div>
-          {/* POST BUTTON */}
-          <button
-            className="rounded-full bg-[#1d9bf0] px-4 py-1.5 font-bold text-white shadow-md hover:bg-[#1a8cd8] disabled:cursor-default disabled:opacity-50 disabled:hover:bg-[#1d9bf0]"
-            disabled={!input && !selectedFile}
-            onClick={sendPost}
-          >
-            Tweet
-          </button>
-        </div>
+        )}
       </div>
     </div>
   )
