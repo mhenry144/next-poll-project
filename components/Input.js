@@ -11,11 +11,17 @@ function Input() {
   const [input, setInput] = useState('')
   const [selectedFile, setSelectedFile] = useState(null)
   const filePickerRef = useRef(null)
+  const [loading, setLoading] = useState(false)
+  const [showEmojis, setShowEmojis] = useState(false)
+
+  const sendPost = () => {}
 
   const addImageToPost = () => {}
   return (
     <div
-      className={`flex space-x-3 overflow-y-scroll border-b border-gray-700 p-3 `}
+      className={`scrollbar-hide flex space-x-3 overflow-y-scroll border-b border-gray-700 p-3 ${
+        loading && 'opacity-60'
+      }`}
     >
       <img
         src="https://imgs.search.brave.com/L9p9xnhqEJGC4qyAqnGjXlZlc_BGAfAOL8ou72Jf_6A/rs:fit:384:384:1/g:ce/aHR0cHM6Ly93d3cu/YXBrbWlycm9yLmNv/bS93cC1jb250ZW50/L3VwbG9hZHMvMjAx/Ny8wOC81OThiMzU0/NjhiOGYyLTM4NHgz/ODQucG5n"
@@ -24,13 +30,12 @@ function Input() {
       />
       {/* divide y = tailwind utility class to create a border and adds it to each child */}
       <div className="w-full divide-y divide-gray-700">
-        <div className={``}>
+        <div className={`${selectedFile && 'pb-7'} ${input && 'space-y-2.5'}`}>
+          {/* TEXT */}
           <textarea
             value={input}
-            placeholder="What's up?"
             onChange={(e) => setInput(e.target.value)}
-            name=""
-            id=""
+            placeholder="What's happening?"
             rows="2"
             className="min-h-[50px] w-full bg-transparent text-lg tracking-wide text-[#d9d9d9] placeholder-gray-500 outline-none"
           />
@@ -52,8 +57,10 @@ function Input() {
             </div>
           )}
         </div>
-        <div className="items-centerjustify-between flex pt-2.5">
+        {/* Icons */}
+        <div className="flex items-center justify-between pt-2.5">
           <div className="flex items-center">
+            {/* Added custom tailwind css named 'icon' */}
             <div className="icon" onClick={() => filePickerRef.current.click()}>
               <PhotographIcon className="h-[22px] text-[#1d9bf0]" />
               <input
@@ -66,7 +73,7 @@ function Input() {
             <div className="icon rotate-90">
               <ChartBarIcon className="h-[22px] text-[#1d9bf0]" />
             </div>
-
+            {/* ! === opposite */}
             <div className="icon" onClick={() => setShowEmojis(!showEmojis)}>
               <EmojiHappyIcon className="h-[22px] text-[#1d9bf0]" />
             </div>
@@ -75,6 +82,14 @@ function Input() {
               <CalendarIcon className="h-[22px] text-[#1d9bf0]" />
             </div>
           </div>
+          {/* POST BUTTON */}
+          <button
+            className="rounded-full bg-[#1d9bf0] px-4 py-1.5 font-bold text-white shadow-md hover:bg-[#1a8cd8] disabled:cursor-default disabled:opacity-50 disabled:hover:bg-[#1d9bf0]"
+            disabled={!input && !selectedFile}
+            onClick={sendPost}
+          >
+            Tweet
+          </button>
         </div>
       </div>
     </div>
