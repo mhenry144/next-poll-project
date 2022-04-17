@@ -25,4 +25,17 @@ export default NextAuth({
       from: 'NextAuth.js <no-reply@example.com>',
     }),
   ],
+  // callback to menu plate items
+  // retrieve session on the server before user reaches the page
+  callbacks: {
+    async session({ session, token }) {
+      session.user.tag = session.user.name
+        .split(' ')
+        .join('')
+        .toLocaleLowerCase()
+
+      session.user.uid = token.sub
+      return session
+    },
+  },
 })

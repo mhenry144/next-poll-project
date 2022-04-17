@@ -4,7 +4,11 @@ import Sidebar from '../components/Sidebar'
 import Feed from '../components/Feed'
 import { getProviders, getSession, useSession } from 'next-auth/react'
 
-export default function Home() {
+export default function Home({ trendingResults, followResults, providers }) {
+  const { data: session } = useSession()
+
+  if (!session) return <Login providers={providers} />
+
   return (
     // flex min-h-screen flex-col items-center justify-center py-2
     <div className="">
@@ -25,7 +29,7 @@ export default function Home() {
 }
 // server side props
 export async function getServerSideProps(context) {
-  // fetch props from server
+  // fetch props from jsonkeeper
   const trendingResults = await fetch('https://jsonkeeper.com/b/NKEV').then(
     (res) => res.json()
   )
