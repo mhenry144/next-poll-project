@@ -15,8 +15,10 @@ import {
   updateDoc,
 } from '@firebase/firestore'
 import { getDownloadURL, ref, uploadString } from '@firebase/storage'
+import { useSession } from 'next-auth/react'
 
 function Input() {
+  const { data: session } = useSession()
   const [input, setInput] = useState('')
   const [loading, setLoading] = useState(false)
   const [selectedFile, setSelectedFile] = useState(null)
@@ -28,10 +30,10 @@ function Input() {
     setLoading(true)
 
     const docRef = await addDoc(collection(db, 'posts'), {
-      //id: session.user.uid,
-      //username: session.user.name,
-      //userImg: session.user.image,
-      //tag: session.user.tag,
+      id: session.user.uid,
+      username: session.user.name,
+      userImg: session.user.image,
+      tag: session.user.tag,
       text: input,
       timestamp: serverTimestamp(),
     })
@@ -71,8 +73,8 @@ function Input() {
       }`}
     >
       <img
-        src="https://imgs.search.brave.com/L9p9xnhqEJGC4qyAqnGjXlZlc_BGAfAOL8ou72Jf_6A/rs:fit:384:384:1/g:ce/aHR0cHM6Ly93d3cu/YXBrbWlycm9yLmNv/bS93cC1jb250ZW50/L3VwbG9hZHMvMjAx/Ny8wOC81OThiMzU0/NjhiOGYyLTM4NHgz/ODQucG5n"
-        alt=""
+        src={session.user.image}
+        alt="image"
         className="h-11 w-11 rounded-full xl:mr-2.5"
       />
       {/* divide y = tailwind utility class to create a border and adds it to each child */}

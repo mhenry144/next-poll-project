@@ -2,7 +2,7 @@ import React from 'react'
 import Image from 'next/image'
 import SidebarLink from './SidebarLink'
 import { HomeIcon } from '@heroicons/react/solid'
-import { useSession } from 'next-auth/react'
+import { signOut, useSession } from 'next-auth/react'
 import {
   HashtagIcon,
   BellIcon,
@@ -38,10 +38,13 @@ function Sidebar() {
         Tweet
       </button>
 
-      <div className="hoverAnimation xl: mt-auto flex items-center justify-center text-[#d9d9d9] xl:ml-auto xl:-mr-5">
+      <div
+        className="hoverAnimation xl: mt-auto flex items-center justify-center text-[#d9d9d9] xl:ml-auto xl:-mr-5"
+        onClick={signOut}
+      >
         <img
           src={session.user.image}
-          alt="icon"
+          alt="image"
           className="h-10 w-10 rounded-full xl:mr-2.5"
         />
         <div className="hidden leading-5 xl:inline">
