@@ -1,8 +1,5 @@
-import React from 'react'
 import Image from 'next/image'
-import SidebarLink from './SidebarLink'
 import { HomeIcon } from '@heroicons/react/solid'
-import { signOut, useSession } from 'next-auth/react'
 import {
   HashtagIcon,
   BellIcon,
@@ -13,6 +10,9 @@ import {
   DotsCircleHorizontalIcon,
   DotsHorizontalIcon,
 } from '@heroicons/react/outline'
+import SidebarLink from './SidebarLink'
+import { signOut } from 'next-auth/react'
+import { useSession } from 'next-auth/react'
 
 function Sidebar() {
   const { data: session } = useSession()
