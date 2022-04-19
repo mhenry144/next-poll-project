@@ -82,6 +82,7 @@ function Post({ id, post, postPage }) {
   }
 
   return (
+    // Route Post to another page
     <div
       className="flex cursor-pointer border-b border-gray-700 p-3"
       onClick={() => router.push(`/${id}`)}
@@ -94,7 +95,8 @@ function Post({ id, post, postPage }) {
           className="mr-4 h-11 w-11 rounded-full"
         />
       )}
-      <div className="flex w-full flex-col space-y-2">
+
+      <div className="flex w-full flex-col space-y-2 p-3">
         <div className={`flex ${!postPage && 'justify-between'}`}>
           {postPage && (
             <img
@@ -135,10 +137,11 @@ function Post({ id, post, postPage }) {
         {postPage && (
           <p className="mt-0.5 text-xl text-[#d9d9d9]">{post?.text}</p>
         )}
+        {/* Image of Post */}
         <img
           src={post?.image}
           alt=""
-          className="mr-2 max-h-[700px] rounded-2xl object-cover"
+          className="mr-2 max-h-[500px] max-w-[500px] rounded-2xl object-cover"
         />
         <div
           className={`flex w-10/12 justify-between text-[#6e767d] ${

@@ -11,7 +11,8 @@ import { useRecoilState } from 'recoil'
 export default function Home({ trendingResults, followResults, providers }) {
   const { data: session } = useSession()
   const [isOpen, setIsOpen] = useRecoilState(modalState)
-
+  
+  // if no session -> show login component
   if (!session) return <Login providers={providers} />
 
   return (
