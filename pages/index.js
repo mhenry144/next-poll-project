@@ -1,6 +1,7 @@
 import Head from 'next/head'
 import Feed from '../components/Feed'
 import Sidebar from '../components/Sidebar'
+import Widgets from '../components/Widgets'
 import { getProviders, getSession, useSession } from 'next-auth/react'
 import Login from '../components/Login'
 import Modal from '../components/Modal'
@@ -24,6 +25,10 @@ export default function Home({ trendingResults, followResults, providers }) {
       <main className="mx-auto flex min-h-screen max-w-[1500px] bg-black">
         <Sidebar />
         <Feed />
+        <Widgets
+          trendingResults={trendingResults}
+          followResults={followResults}
+        />
 
         {isOpen && <Modal />}
       </main>
