@@ -68,7 +68,7 @@ function Input() {
   }
   return (
     <div
-      className={`scrollbar-hide flex space-x-3 overflow-y-scroll border-b border-gray-700 p-3 ${
+      className={`flex space-x-3 overflow-y-scroll border-b border-gray-700 p-3 scrollbar-hide ${
         loading && 'opacity-60'
       }`}
     >
@@ -86,7 +86,7 @@ function Input() {
             onChange={(e) => setInput(e.target.value)}
             placeholder="What's up?"
             rows="2"
-            className="min-h-[50px] w-full bg-transparent text-lg tracking-wide text-[#d9d9d9] placeholder-gray-500 outline-none"
+            className="min-h-[50px] w-full bg-transparent text-lg tracking-wide text-[#d9d9d9] placeholder-gray-500 outline-none scrollbar-hide"
           />
           {/* && === if selectedFile === true, show */}
           {selectedFile && (
@@ -137,7 +137,7 @@ function Input() {
             </div>
             {/* POST BUTTON */}
             <button
-              className="rounded-full bg-[#1d9bf0] px-4 py-1.5 font-bold text-white shadow-md hover:bg-[#1a8cd8] disabled:cursor-default disabled:opacity-50 disabled:hover:bg-[#1d9bf0]"
+              className="rounded-full bg-[#1d9bf0] px-4 py-1.5 font-bold text-white shadow-md disabled:cursor-default disabled:opacity-50 hover:bg-[#1a8cd8] disabled:hover:bg-[#1d9bf0]"
               disabled={!input && !selectedFile}
               onClick={sendPost}
             >

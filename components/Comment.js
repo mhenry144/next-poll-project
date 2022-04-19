@@ -33,7 +33,7 @@ function Comment({ comment }) {
               <Moment fromNow>{comment?.timestamp?.toDate()}</Moment>
             </span>
             {/* Comment */}
-            <p className="mt-0.5 max-w-lg overflow-scroll text-[15px] text-[#d9d9d9] sm:text-base">
+            <p className="mt-0.5 max-w-lg overflow-scroll text-[15px] text-[#d9d9d9] scrollbar-hide sm:text-base">
               {comment?.comment}
             </p>
           </div>
