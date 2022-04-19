@@ -1,4 +1,3 @@
-import React from 'react'
 import {
   ChartBarIcon,
   ChatIcon,
@@ -28,11 +27,12 @@ function Comment({ comment }) {
                 @{comment?.tag}{' '}
               </span>
             </div>{' '}
-            · {/* Timestamp */}
+            ·{' '}
             <span className="text-sm hover:underline sm:text-[15px]">
+              {/* Timestamp */}
               <Moment fromNow>{comment?.timestamp?.toDate()}</Moment>
             </span>
-            {/* Comment */}
+            {/* Comments */}
             <p className="mt-0.5 max-w-lg overflow-scroll text-[15px] text-[#d9d9d9] scrollbar-hide sm:text-base">
               {comment?.comment}
             </p>
@@ -40,25 +40,25 @@ function Comment({ comment }) {
           <div className="icon group flex-shrink-0">
             <DotsHorizontalIcon className="h-5 text-[#6e767d] group-hover:text-[#1d9bf0]" />
           </div>
-          {/* Option Icons*/}
-          <div className="flex w-10/12 justify-between text-[#6e767d]">
-            <div className="icon group">
-              <ChatIcon className="h-5 group-hover:text-[#1d9bf0]" />
-            </div>
+        </div>
+        {/* Option Icons*/}
+        <div className="flex w-10/12 justify-between text-[#6e767d]">
+          <div className="icon group">
+            <ChatIcon className="h-5 group-hover:text-[#1d9bf0]" />
+          </div>
 
-            <div className="group flex items-center space-x-1">
-              <div className="icon group-hover:bg-pink-600/10">
-                <HeartIcon className="h-5 group-hover:text-pink-600" />
-              </div>
-              <span className="text-sm group-hover:text-pink-600"></span>
+          <div className="group flex items-center space-x-1">
+            <div className="icon group-hover:bg-pink-600/10">
+              <HeartIcon className="h-5 group-hover:text-pink-600" />
             </div>
+            <span className="text-sm group-hover:text-pink-600"></span>
+          </div>
 
-            <div className="icon group">
-              <ShareIcon className="h-5 group-hover:text-[#1d9bf0]" />
-            </div>
-            <div className="icon group">
-              <ChartBarIcon className="h-5 group-hover:text-[#1d9bf0]" />
-            </div>
+          <div className="icon group">
+            <ShareIcon className="h-5 group-hover:text-[#1d9bf0]" />
+          </div>
+          <div className="icon group">
+            <ChartBarIcon className="h-5 group-hover:text-[#1d9bf0]" />
           </div>
         </div>
       </div>

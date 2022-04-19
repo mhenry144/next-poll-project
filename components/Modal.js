@@ -130,7 +130,7 @@ function Modal() {
                         onChange={(e) => setComment(e.target.value)}
                         placeholder="Tweet your reply"
                         rows="2"
-                        className="min-h-[80px] w-full bg-transparent text-lg tracking-wide text-[#d9d9d9] placeholder-gray-500 outline-none"
+                        className="min-h-[80px] w-full bg-transparent text-lg tracking-wide text-[#d9d9d9] placeholder-gray-500 outline-none scrollbar-hide"
                       />
                       {/* ICONS */}
                       <div className="flex items-center justify-between pt-2.5">
@@ -152,7 +152,7 @@ function Modal() {
                           </div>
                         </div>
                         <button
-                          className="rounded-full bg-[#1d9bf0] px-4 py-1.5 font-bold text-white shadow-md hover:bg-[#1a8cd8] disabled:cursor-default disabled:opacity-50 disabled:hover:bg-[#1d9bf0]"
+                          className="rounded-full bg-[#1d9bf0] px-4 py-1.5 font-bold text-white shadow-md disabled:cursor-default disabled:opacity-50 hover:bg-[#1a8cd8] disabled:hover:bg-[#1d9bf0]"
                           type="submit"
                           onClick={sendComment}
                           disabled={!comment.trim()}
